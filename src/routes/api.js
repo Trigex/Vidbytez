@@ -8,6 +8,7 @@ const validator = require("validator");
 const session = require("../utils/session");
 const hat = require("hat");
 const ffmpeg = require("../utils/ffmpeg_utils");
+const regex = require("../utils/regex_utils");
 
 module.exports = function(app) {
     app.get(uriBase + "version", function(req, res){
@@ -195,7 +196,11 @@ module.exports = function(app) {
                 // reencode video
                 res.send(json.success("The video was successfully uploaded! Please wait for processing to finish!"));
                 // keep it at the lowest quality for now
-                await ffmpeg.encodeVideo(path, config.app.videos.qualities[0], videoID);
+                var newPath = await ffmpeg.encodeVideo(path, config.app.videos.qualities[0]);
+                if(newPath!==false) {
+                    videoware.disableProcessing(videoID);
+                    videoware.updateVideoPath(videoID, newPath);
+                }
                 break;
 
             default:
@@ -245,6 +250,6 @@ module.exports = function(app) {
     });
 
     app.get("/test", async function(req, res){
-        
+        ffmpeg.encodeVideo(__dirname+"/../static/videos/small.mp4.original", "1920x1080");
     });
 }
