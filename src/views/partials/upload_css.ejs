@@ -1,0 +1,49 @@
+<style>
+    #uploader:hover > .yel_btn {
+        text-decoration: underline;
+    }
+    #drag_and_drop_link {
+        font-weight:bold;
+        font-size:15px;
+        position: relative;
+        top: 35px;
+        text-decoration: none;
+        pointer-events: none;
+    }
+    
+    #upload_status {
+        margin-bottom:10px;
+    }
+    
+    #upload_status.error {
+        color:#f00;
+    }
+    
+    #custom_thumb_button {
+        border:3px double #cccccc;
+        width:136px;
+        height:80px;
+        cursor:pointer;
+    }
+    
+    #custom_thumb_button:hover,
+    #custom_thumb_button.loading {
+        border-color: #4d4ccc;
+    }
+    
+    #custom_thumb_button.loading {
+        opacity: 0.5;
+        cursor:auto;
+    }
+    
+    #custom_thumb_hiding {
+        position:relative;
+        overflow:hidden;
+        width:0px;
+        height:0px;
+    }
+    
+    #custom_thumb_file {
+        position:absolute;
+    }
+    </style>

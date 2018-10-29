@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+    <head>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-8433080377364721",
+          enable_page_level_ads: true
+     });
+</script>
+
+<meta charset="utf-8">
+
+<title>Upload - VidLii</title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="shortcut icon" href="https://i.r.worldssl.net/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="https://i.r.worldssl.net/img/vl_app.png">
+
+<meta name="description" content="Watch, upload and share your favorite videos with the entire world in an easy to use and friendly environment.">
+<meta name="keywords" content="video, sharing, camera, upload, social, friends">
+
+
+<meta property="og:site_name" content="VidLii">
+<meta property="og:url" content="https://www.vidlii.com/upload">
+
+
+
+
+
+<meta name="msapplication-tap-highlight" content="no">
+
+<link rel="stylesheet" type="text/css" href="https://i.r.worldssl.net/css/m.css?4">
+
+
+<script>adblock_installed = true;</script>
+<script src='/ajax/ads.js?v=7819'></script>
+<script src='https://www.google.com/recaptcha/api.js' async></script>
+<script src="https://i.r.worldssl.net/js/jquery.js"></script>
+
+
+    </head>
+    <body>
+            <div class="wrapper">
+    <header class="n_head">
+    <div class="pr_hd_wrapper">
+        <a href="/"><img src="https://i.r.worldssl.net/img/Vidlii6.png" alt="VidLii" title="VidLii - Display Yourself." id="hd_vidlii"></a>
+        <nav>
+            <ul>
+                <a href="/"><li>Home</li></a><a href="/videos" id="pr_sel"><li>Videos</li></a><a href="/channels"><li>Channels</li></a><a href="/community"><li>Community</li></a>
+            </ul>
+        </nav>
+        <nav id="sm_nav">
+                            <a href="/user/Trigex" id="hd_name">Trigex<img id="n_ar" src="https://i.r.worldssl.net/img/dar.png"></a><a href="/my_account">Account</a><a href="/inbox" id="inbox_hd"><img src="https://i.r.worldssl.net/img/amsg0.png"><span>(0)</span></a><a href="/help">Help</a><a href="/logout">Log Out</a>
+                <div id="name_nav">
+                    <div>
+                    <a href="/user/Trigex">My Channel</a>
+                                        <a href="/my_videos">My Videos</a>
+                    <a href="/my_favorites">My Favorites</a>
+                    <a href="/my_subscriptions">Subscriptions</a>
+                    <a href="/friends">Friends</a>
+                    <a href="/inbox">Inbox</a>
+                    </div>
+                </div>
+                    </nav>
+        <div class="pr_hd_bar">
+            <form action="/results" method="GET">
+                <input type="search" name="q" class="search_bar" maxlength="256" autofocus> <input type="submit" class="search_button" value="Search">
+            </form>
+            <a href="/upload" class="yel_btn">Upload</a>
+        </div>
+    </div>
+</header>
+                    <main class="bottom_wrapper">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.js"></script>
+<style>
+	#uploader:hover > .yel_btn {
+		text-decoration: underline;
+	}
+	#drag_and_drop_link {
+		font-weight:bold;
+		font-size:15px;
+		position: relative;
+		top: 35px;
+		text-decoration: none;
+		pointer-events: none;
+	}
+	
+	#upload_status {
+		margin-bottom:10px;
+	}
+	
+	#upload_status.error {
+		color:#f00;
+	}
+	
+	#custom_thumb_button {
+		border:3px double #cccccc;
+		width:136px;
+		height:80px;
+		cursor:pointer;
+	}
+	
+	#custom_thumb_button:hover,
+	#custom_thumb_button.loading {
+		border-color: #4d4ccc;
+	}
+	
+	#custom_thumb_button.loading {
+		opacity: 0.5;
+		cursor:auto;
+	}
+	
+	#custom_thumb_hiding {
+		position:relative;
+		overflow:hidden;
+		width:0px;
+		height:0px;
+	}
+	
+	#custom_thumb_file {
+		position:absolute;
+	}
+</style>
+<script src="https://i.r.worldssl.net/js/vlUploader.js?4"></script>
+<div class="h_l">
+	<div class="you_wnt" id="old_upload_box">
+		<div>
+			<div style="background:white;margin:5px;border:1px solid #ccc;border-radius:8px;position:relative;padding:130px 80px">
+				<form action="/upload" method="POST" id="uploader">
+					<input type="file" id="selectedFile" style="cursor:pointer;opacity:0;position:absolute;left:0;top:0;width:633px;height:298px" onchange="new_upload()">
+					<a href="javascript:void(0)" onclick="document.getElementById('selectedFile').click();" class="yel_btn" id="upload_button" style="border-radius:9px;padding:19px 37px;font-size:22px">Select a file to Upload</a><br>
+					<a id="drag_and_drop_link" href="javascript:void(0)">Or drag and drop a video file</a>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="you_wnt" id="upload_select_box" style="overflow:hidden;display:none">
+		<div style="text-align:left;overflow:hidden">
+			<div id="vurl" style="display:none"></div>
+			<div style="background:white;border:1px solid #ccc;padding: 15px;width:603px;float:left;margin:5px;border-radius:8px" id="video_uploader">
+				<div id="video_title_header" style="font-weight:bold;margin-bottom:10px"></div>
+				<div id="video_progress" style="margin-bottom:5px">
+					<div id="video_progress_in">0%</div>
+				</div>
+				<div id="upload_status"></div>
+				<div style="border-bottom:1px solid #dcdcdc;margin-bottom:17px"></div>
+				<div>
+					<div style="float:right; display:inline-block; width: 142px">
+                        <div style="margin: 20px 0; text-align-last:center">
+                            <select id="privacy" style="width:100%" onchange="if (this.value != 3) { $('#schedule_up').addClass('hddn'); } else { $('#schedule_up').removeClass('hddn'); }">
+                                <option value="0">Public</option>
+                                <option value="1">Unlisted</option>
+                                <option value="2">Private</option>
+                                <option value="3">Scheduled</option>
+                            </select>
+                            <input type="text" id="schedule_up" class="hddn" style="width:93%; margin-top:10px" placeholder="Pick a date">
+                            <script>$('#schedule_up').datetimepicker();</script>
+                        </div>
+						<img id="custom_thumb_button" src="">
+						<i style="display:block; text-align:center; font-size:10px;">*click to upload thumbnail</i>
+					</div>
+					<div id="custom_thumb_hiding"><input type="file" id="custom_thumb_file"></div>
+					<strong style="display:block;margin-bottom:2px;">Video Title:</strong>
+					<input type="text" style="width:320px" id="video_title" maxlength="100">
+					<strong style="display:block;margin-top:12px;margin-bottom:2px;">Video Description:</strong>
+					<textarea style="width:403px" rows="5" id="video_description" maxlength="1000"></textarea>
+					<strong style="display:block;margin-top:8px;margin-bottom:2px;">Video Tags:</strong>
+					<input type="text" style="width:320px" id="video_tags" maxlength="256">
+					<strong style="display:block;margin-top:8px;margin-bottom:2px;">Category</strong>
+					<select id="video_category">
+												<option value="1">Film & Animation</option>
+												<option value="2">Autos & Vehicles</option>
+												<option value="3">Music</option>
+												<option value="4">Pets & Animals</option>
+												<option value="5">Sports</option>
+												<option value="6">Travel & Events</option>
+												<option value="7">Gaming</option>
+												<option value="8">People & Blogs</option>
+												<option value="9">Comedy</option>
+												<option value="10">Entertainment</option>
+												<option value="11">News & Politics</option>
+												<option value="12">Howto & Style</option>
+												<option value="13">Education</option>
+												<option value="14">Science & Technology</option>
+												<option value="15">Nonprofits & Activism</option>
+											</select>
+					<div style="display:block;margin-top:22px">
+						<input type="button" id="save_upload_changes_button" value="Save Changes" onclick="if (isEmptyOrSpaces(_('video_title').value) == false) {save_video_changes()} else { alert('Please enter a title') }">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="line-height:25px;margin-top:3px">
+	Do you need help with your upload?<br>
+	Try out the <a href="/help">Help Section</a> or write us an email!
+	</div>
+	<div style="width:468px;margin: 5px auto">
+		<ins class="adsbygoogle"
+			 style="display:inline-block;width:468px;height:60px;margin:0 auto"
+			 data-ad-client="ca-pub-8433080377364721"
+			 data-ad-slot="7956738899"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+</div>
+<div class="h_r">
+	<div style="width:300px;margin:0 auto">
+	<ins class="adsbygoogle"
+		 style="display:inline-block;width:300px;height:250px;margin-bottom:20px"
+		 data-ad-client="ca-pub-8433080377364721"
+		 data-ad-slot="7129467293"></ins>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+	</div>
+	<div class="you_wnt" id="upload_select_box">
+		<div style="text-align:left;padding:11px">
+			<strong style="text-align:center;display:block;margin-bottom:9px">Videos can be:</strong>
+			<ul style="padding:0;margin:0 0 0 13px">
+				<li style="margin-bottom:2px">Up to 2GB in size.</li>
+				<li style="margin-bottom:2px">Up to 20 minutes in length.</li>
+				<li style="margin-bottom:2px">Any Resolution.</li>
+				<li style="margin-bottom:2px">A wide variety of formats.</li>
+			</ul>
+		</div>
+	</div>
+	<div class="you_wnt" id="upload_select_box">
+		<div style="text-align:left;padding:11px">
+			<strong style="text-align:center;display:block;margin-bottom:9px">Important:</strong>
+			Do not upload any TV shows, music videos, music concerts, or commercials without permission unless they consist entirely of content you created yourself.<br><br>
+			The Copyright page and the community guidelines can help you determine whether your video infringes someones else's copyright.<br><br>
+			By clicking "Upload Video", you are representing that this video does not violate VidLii's Terms of Use and that you own all copyrights in this video or have authorization to upload it.
+		</div>
+	</div>
+</div>
+<script>
+	var drop = document.getElementById("selectedFile");
+	drop.addEventListener("dragenter", change, false);
+	drop.addEventListener("dragleave",change_back,false);
+
+	function change() {
+		$("#upload_button").html("Drop the Video File");
+	};
+
+	function change_back() {
+		$("#upload_button").html("Select a file to Upload");
+	};
+</script>    </main>
+        <div class="cl"></div>
+<footer style="margin-top:30px">
+    <form action="/results" method="GET">
+        <input type="search" name="q" class="search_bar" maxlength="256"> <input type="submit" value="Search" class="search_button">
+    </form>
+    <div>
+        <div>
+            <strong>About VidLii</strong>
+            <div>
+                <a href="/blog">Blog</a><a href="/about">About</a>
+            </div>
+            <div>
+                <a href="/terms">Terms of Use</a><a href="/privacy">Privacy Policy</a>
+            </div>
+            <div style="margin-right: 49px">
+                <a href="/themes">Themes</a><a href="/testlii">Testlii</a>
+            </div>
+        </div>
+        <div>
+            <strong>Help & Info</strong>
+            <div>
+                <a href="/help">Help Center</a><a href="/partners">Partnership</a>
+            </div>
+            <div>
+                <a href="/copyright">Copyright</a><a href="/guidelines">Community Guidelines</a>
+            </div>
+        </div>
+        <div>
+            <strong>Your Account</strong>
+            <div>
+                <a href="/my_videos">My Videos</a><a href="/my_favorites">My Favorites</a>
+            </div>
+            <div>
+                <a href="/my_subscriptions">My Subscriptions</a><a href="/my_account">My Account</a>
+            </div>
+        </div>
+    </div>
+</footer>    </div>
+        <script src="https://i.r.worldssl.net/js/main.js?27"></script>    </body>
+</html>

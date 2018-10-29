@@ -1,0 +1,61 @@
+<% include partials/header %>
+<main class="bottom_wrapper">
+    <h1 class="pg_hd">Sign In</h1>
+<aside class="lg_l">
+<div style="font-size:16px;font-weight:bold">Sign in now, and use your Vidbytez account to:</div>
+<table style="margin: 17px 0 0 0" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td>
+            <div style="font-size: 16px;">Customize your experience on Vidbytez</div>
+            <div style="color:#2f2f2f;padding-bottom:43px">Vidbytez allows you to personalize your channel and homepage to whatever you want it to look like!</div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div style="font-size: 16px;">Be part of the Vidbytez community</div>
+            <div style="color:#2f2f2f;padding-bottom:43px" "="">Having a Vidbytez account allows you to interact and be part of the Vidbytez community in many unique and fun ways!</div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div style="font-size: 16px;">Share with your friends</div>
+            <div style="color:#2f2f2f;padding-bottom:31px">See videos shared by your friends across all your social networks --- all in one place!</div>
+        </td>
+    </tr>
+</tbody></table>
+</aside>
+<section class="lg_r">
+<div class="you_wnt" id="login_box">
+    <div>
+        <form action="/api/user/login" method="POST" id="user_login">
+        <img src="/img/vidbytez.png" height="37" width="92" alt="Vidbytez" title="Vidbytez - Display Yourself.">
+                                <table cellpadding="3">
+            <tbody><tr>
+                <td align="right"><label for="lg_username">Username:</label></td>
+                <td align="left"><input type="text" name="username" id="lg_username" maxlength="128" required="" autofocus=""></td>
+            </tr>
+            <tr>
+                <td align="right"><label for="lg_password">Password:</label></td>
+                <td align="left"><input id="lg_password" name="password" type="password" maxlength="128" required=""></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td align="left"><input type="submit" class="search_button" style="padding:2.5px 10px" name="submit_login" value="Sign In"></td>
+            </tr>
+        </tbody></table>
+        <div class="log_fgt"><a href="javascript:void(0)" onclick="alert('You can also log in with your email instead of your username!')">Forgot Username</a> | <a href="/forgot_password">Forgot Password</a></div>
+        </form>
+    </div>
+</div>
+<div class="you_wnt">
+    <div>
+        <strong>No Account?</strong><br>
+        <strong><a href="/register">Sign Up for a free Vidbytez Account!</a></strong>
+    </div>
+</div>
+<div style="width:320px;margin:18px auto">
+</div>
+</section>    
+</main>
+<div class="cl"></div>
+<% include partials/footer %>

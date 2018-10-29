@@ -1,0 +1,40 @@
+{
+    "app": {
+        "build": {
+            "version": 1.0,
+            "year": 2018
+        },
+        "server": {
+            "port": 8040
+        },
+        "session": {
+            "secret": "secret",
+            "expires": "253402300000000"
+        },
+        "captcha": {
+            "enabled": false,
+            "sitekey": "",
+            "secret": ""
+        },
+        "database": {
+            "host": "127.0.0.1",
+            "port": "27017",
+            "database": "vidbytez"
+        },
+        "videos": {
+            "qualities": ["480x360", "640x480"],
+            "max_file_size": 2147483648,
+            "max_length": 300,
+            "file_types": ["mkv", "mp4", "mov", "avi", "3gp", "wmv", "m4v", "webm"]
+        }
+    },
+
+    "metadata": {
+        "title": "Vidbytez",
+        "author": "Trigex",
+        "description": "Vidlii but open source",
+        "url": "http://localhost:8040/",
+        "keywords": "video, sharing, camera, upload, social, friends",
+        "tagline": "Go fuck yourself"
+    }
+}

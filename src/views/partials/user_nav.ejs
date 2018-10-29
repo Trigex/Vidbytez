@@ -1,0 +1,14 @@
+<!-- Implement specificity to given user -->
+<nav id="sm_nav">
+    <a href="/user/<%= session.username %>" id="hd_name"><%= session.username %><img id="n_ar" src="https://i.r.worldssl.net/img/dar.png"></a><a href="/my_account">Account</a><a href="/inbox" id="inbox_hd"><img src="https://i.r.worldssl.net/img/amsg0.png"><span>(0)</span></a><a href="/help">Help</a><a href="" id="logout">Log Out</a>
+        <div id="name_nav">
+        <div>
+        <a href="/user/<%= session.username %>">My Channel</a>
+            <a href="/my_videos">My Videos</a>
+            <a href="/my_favorites">My Favorites</a>
+            <a href="/my_subscriptions">Subscriptions</a>
+            <a href="/friends">Friends</a>
+            <a href="/inbox">Inbox</a>
+        </div>
+    </div>
+</nav>

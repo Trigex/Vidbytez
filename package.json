@@ -1,0 +1,24 @@
+{
+  "name": "vidbytez",
+  "version": "1.0.0",
+  "description": "Vidlii but open source",
+  "main": "vidbytez.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Trigex",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.1",
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-fileupload": "^1.0.0",
+    "express-session": "^1.15.6",
+    "fluent-ffmpeg": "^2.1.2",
+    "hat": "0.0.3",
+    "mongoose": "^5.3.1",
+    "shortid": "^2.2.13",
+    "validator": "^10.8.0"
+  }
+}

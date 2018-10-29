@@ -1,0 +1,24 @@
+<div class="wrapper">
+    <header class="n_head">
+        <div class="pr_hd_wrapper">
+                <a href="/home"><img src="/img/vidbytez.png" alt="<%= config.metadata.title %>" title="<%= config.metadata.title %> - <%= config.metadata.tagline %>" id="hd_vidlii"></a>
+                <nav>
+                    <ul>
+                        <a href="/" id="pr_sel"><li>Home</li></a><a href="/videos"><li>Videos</li></a><a href="/channels"><li>Channels</li></a><a href="/community"><li>Community</li></a>
+                    </ul>
+                </nav>
+                <!-- Change depending if logged in or not -->
+                <% if(session.username) { %>
+                    <% include user_nav %>
+                <% } else { %>
+                    <% include regular_nav %>
+                <% } %>
+                
+                <div class="pr_hd_bar">
+                        <form action="/results" method="GET">
+                            <input type="search" name="q" class="search_bar" maxlength="256" autofocus> <input type="submit" class="search_button" value="Search">
+                        </form>
+                        <a href="/upload" class="yel_btn">Upload</a>
+                </div>
+        </div>
+    </header>
