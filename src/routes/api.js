@@ -9,6 +9,7 @@ const session = require("../utils/session");
 const hat = require("hat");
 const ffmpeg = require("../utils/ffmpeg_utils");
 const regex = require("../utils/regex_utils");
+//const fs = require("fs");
 
 module.exports = function(app) {
     app.get(uriBase + "version", function(req, res){
@@ -169,9 +170,7 @@ module.exports = function(app) {
                 }
                 // create video db object
                 var user = await userware.getUserByAuthKey(authKey);
-                console.log(user);
                 var videoID = await videoware.createVideo(filename, Date.now(), user);
-                console.log(videoID);
                 res.send(JSON.stringify({success: "The video is now uploading!", videoID: videoID}));
                 break;
 
@@ -188,19 +187,20 @@ module.exports = function(app) {
                 console.log("File Uploaded!: " + file);
                 // move file to static directory
                 var path = __dirname + "/../static/videos/" + file.name + ".original"; 
+                console.log(file);
+                console.log(path);
                 try {
                     await file.mv(path);
                 } catch(err) {
                     console.log(err);
                 }
+
                 // reencode video
                 res.send(json.success("The video was successfully uploaded! Please wait for processing to finish!"));
-                // keep it at the lowest quality for now
-                var newPath = await ffmpeg.encodeVideo(path, config.app.videos.qualities[0]);
-                if(newPath!==false) {
-                    videoware.disableProcessing(videoID);
-                    videoware.updateVideoPath(videoID, newPath);
-                }
+                // re-encode the video, then disable the "processing" flag on the video, and set the file url
+                await ffmpeg.encodeVideo(path, config.app.videos.qualities[0], (newPath) => {videoware.disableProcessing(videoID); videoware.updateVideoPath(videoID, newPath);});
+                // delete the original file
+                //fs.unlink(path, (err) => {if(err) {console.log(err);}});
                 break;
 
             default:
@@ -230,26 +230,34 @@ module.exports = function(app) {
             return;
         }
 
-        // put ownership checking here later
+        // check if the video is owned by the user
+        var video = await videoware.getVideoByID(videoID);
+        if(video !== null) {
+            // get the user whom owns the video
+            var user = await userware.getUserByObjectID(video.author);
+            // check if the user's authkey and the sent authkey match
+            if(authKey = user.authKey) {
+                // proceed
+                // update title
+                if(typeof title != "undefined") {
+                    await videoware.updateTitle(videoID, title);
+                }
 
-        // update title
-        if(typeof title != "undefined") {
-            await videoware.updateTitle(videoID, title);
+                // update description
+                if(typeof description != "undefined") {
+                    await videoware.updateDescription(videoID, description);
+                }
+                // update tags
+                if(typeof tags != "undefined") {
+                    await videoware.updateTags(videoID, tags);
+                }
+            } else {
+                res.send(json.error("You don't own this video!"));
+            }
+        } else {
+            res.send(json.error("The video doesn't exist!"));
+            return;
         }
-
-        // update description
-        if(typeof description != "undefined") {
-            await videoware.updateDescription(videoID, description);
-        }
-        // update tags
-        if(typeof tags != "undefined") {
-            await videoware.updateTags(videoID, tags);
-        }
-
         res.send(json.success("The video information was updated!"));
-    });
-
-    app.get("/test", async function(req, res){
-        ffmpeg.encodeVideo(__dirname+"/../static/videos/small.mp4.original", "1920x1080");
     });
 }

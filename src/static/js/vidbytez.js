@@ -232,7 +232,7 @@ function videoProgressHandle(event) {
 }
 
 function videoCompleteHandle(event) {
-        createNotification("The video was uploaded!!! Congrats!!!", "success");
+    createNotification("The video was uploaded!!! Now be patient, we gotta process it!", "success");
 }
 
 function videoErrorHandle(event) {
