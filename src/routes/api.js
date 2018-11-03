@@ -50,7 +50,7 @@ module.exports = function(app) {
         var email = req.body.email;
         var password = req.body.password;
 
-        if(!config.app.signup.disable) {
+        if(config.app.signup.disabled) {
             res.send(json.error("Sorry, sign up is disabled right now!"));
             return;
         }
