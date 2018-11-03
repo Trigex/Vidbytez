@@ -12,9 +12,16 @@ var commentware = module.exports = {
                 var comments = [];
                 // convert object IDs into raw comment object
                 for(var comment of video.comments) {
+                    // get comment
                     var comment = await commentModel.findById(comment._id);
                     // convert author id of comment into raw user object
                     comment.author = await userware.getUserByObjectID(comment.author);
+                    // delete sensitive data or otherwise uneeded data from author
+                    comment.author.email = undefined;
+                    comment.author.authKey = undefined;
+                    comment.author.password = undefined;
+                    comment.author._id = undefined;
+                    comment.author.creation = undefined;
                     comments.push(comment);
                 }
                 return comments;

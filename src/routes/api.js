@@ -31,6 +31,25 @@ module.exports = function(app) {
    }),
 
     /* =======================
+    *  | COMMENT(GET)        |
+    *  =======================*/ 
+   /*   GET
+   *    /api/comments/video/:id
+   *    Get all the comments of a given video
+   */
+   app.get(uriBase + "comments/video/:id/", async function(req, res){
+        var videoID = req.params.id;
+        var comments = await commentware.getCommentsByVideoID(videoID);
+        if(comments===null) {
+            res.send(json.error("That video doesn't exist!"));
+            return;
+        } else {
+            res.send(JSON.stringify({comments: comments}));
+            return;
+        }
+   });
+
+    /* =======================
     *  | POST REQUESTS       |
     *  =======================*/
 

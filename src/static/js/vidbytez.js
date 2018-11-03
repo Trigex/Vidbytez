@@ -106,7 +106,7 @@ $("#comment_submit").click(() => {
         content: content,
         videoID: videoID
     });
-})
+});
 
 $("#logout").click(() => {
     $.ajax({
