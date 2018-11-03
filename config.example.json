@@ -26,9 +26,12 @@
             "max_file_size": 134217728,
             "max_length": 300,
             "framerate": 29.9,
-            "video_bitrate": "100k",
+            "video_bitrate": "152k",
             "audio_bitrate": "152k",
             "file_types": ["mkv", "mp4", "mov", "avi", "3gp", "wmv", "m4v", "webm"]
+        },
+        "signup": {
+            "disabled": true
         }
     },
      "metadata": {

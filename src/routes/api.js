@@ -49,6 +49,11 @@ module.exports = function(app) {
         var username = req.body.username;
         var email = req.body.email;
         var password = req.body.password;
+
+        if(!config.app.signup.disable) {
+            res.send(json.error("Sorry, sign up is disabled right now!"));
+            return;
+        }
         
         /* VALIDATION BLOCK HEHE */
         if(!validator.isEmail(email) || validator.isEmpty(email)) {
