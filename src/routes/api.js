@@ -1,3 +1,7 @@
+/*
+*   heh.... kid....... welcum to this little thing I call hell.................... can you handle it..... ??
+*/
+
 const config = require('../../config.json');
 const uriBase = "/api/";
 // middleware
@@ -15,10 +19,25 @@ const authkey = require("../utils/authkey");
 //const fs = require("fs");
 
 module.exports = function(app) {
-    app.get(uriBase + "version", function(req, res){
-        res.send(JSON.stringify({version: config.app.build.version}));
-    }),
+    /* =======================
+    *  | GET REQUESTS        |
+    *  =======================*/
 
+    /* =======================
+    *  | META                |
+    *  =======================*/ 
+   app.get(uriBase + "version", function(req, res){
+    res.send(JSON.stringify({version: config.app.build.version}));
+   }),
+
+    /* =======================
+    *  | POST REQUESTS       |
+    *  =======================*/
+
+    /* =======================
+    *  | USER                |
+    *  =======================*/ 
+    
     /*  POST
     *   /api/user/create
     *   Create a user given the following paramaters
@@ -125,7 +144,11 @@ module.exports = function(app) {
             }
         }
     });
-
+    
+    /* =======================
+    *  | VIDEO               |
+    *  =======================*/ 
+    
     /*  POST
     *   /api/video/upload
     *   Upload a video! This shit is probably gonna be major fucking jank I have no idea what I'm doing
@@ -137,80 +160,80 @@ module.exports = function(app) {
     *   @param video_file the video file
     *   @param videoID the id of the video
     */
-    app.post(uriBase + "video/upload", async function(req, res){
-        var action = req.body.action;
-        var authKey = req.body.authKey;
+   app.post(uriBase + "video/upload", async function(req, res){
+    var action = req.body.action;
+    var authKey = req.body.authKey;
 
-        if(await userware.authKeyExists(authKey) === false) {
-            res.send(json.error("The authkey sent doesn't exist!"));
-            return;
-        }
+    if(await userware.authKeyExists(authKey) === false) {
+        res.send(json.error("The authkey sent doesn't exist!"));
+        return;
+    }
 
-        switch(action) {
-            case "check":
-                var filename = req.body.filename;
-                var filesize = req.body.filesize;
-                var filetype = req.body.filetype;
-                console.log("Video requested for upload! action: " + action + ", filename: " + filename + ", filesize: " + filesize + ", filetype: " + filetype + " authKey: " + authKey);
-                // filesize check
-                if(filesize > config.app.videos.max_file_size) {
-                    res.send(json.error("The file is too big!"));
-                    return;
+    switch(action) {
+        case "check":
+            var filename = req.body.filename;
+            var filesize = req.body.filesize;
+            var filetype = req.body.filetype;
+            console.log("Video requested for upload! action: " + action + ", filename: " + filename + ", filesize: " + filesize + ", filetype: " + filetype + " authKey: " + authKey);
+            // filesize check
+            if(filesize > config.app.videos.max_file_size) {
+                res.send(json.error("The file is too big!"));
+                return;
+            }
+            // get file type
+            var extension = (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
+            extension = extension[0];
+            var typeFound = false;
+            // loop through for every video type, check if it's supported
+            config.app.videos.file_types.forEach(function(item){
+                if(extension == item) {
+                    typeFound = true;
                 }
-                // get file type
-                var extension = (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
-                extension = extension[0];
-                var typeFound = false;
-                // loop through for every video type, check if it's supported
-                config.app.videos.file_types.forEach(function(item){
-                    if(extension == item) {
-                        typeFound = true;
-                    }
-                });
-                if(!typeFound) {
-                    res.send(json.error("That filetype is not supported! Sorry man!"));
-                    return;
-                }
-                // create video db object
-                var user = await userware.getUserByAuthKey(authKey);
-                var videoID = await videoware.createVideo(filename, Date.now(), user);
-                res.send(JSON.stringify({success: "The video is now uploading!", videoID: videoID}));
-                break;
+            });
+            if(!typeFound) {
+                res.send(json.error("That filetype is not supported! Sorry man!"));
+                return;
+            }
+            // create video db object
+            var user = await userware.getUserByAuthKey(authKey);
+            var videoID = await videoware.createVideo(filename, Date.now(), user);
+            res.send(JSON.stringify({success: "The video is now uploading!", videoID: videoID}));
+            break;
 
-            case "upload":
-                var videoID = req.body.videoID;
-                console.log("The video is now uploading!");
-                // check if a file was given
-                if(Object.keys(req.files).length == 0) {
-                    res.send(json.error("No file was uploaded"));
-                    return;
-                }
-                // grab the video file
-                var file = req.files.video_file;
-                console.log("File Uploaded!: " + file);
-                // move file to static directory
-                var path = __dirname + "/../static/videos/" + file.name + ".original"; 
-                console.log(file);
-                console.log(path);
-                try {
-                    await file.mv(path);
-                } catch(err) {
-                    console.log(err);
-                }
+        case "upload":
+            var videoID = req.body.videoID;
+            console.log("The video is now uploading!");
+            // check if a file was given
+            if(Object.keys(req.files).length == 0) {
+                res.send(json.error("No file was uploaded"));
+                return;
+            }
+            // grab the video file
+            var file = req.files.video_file;
+            console.log("File Uploaded!: " + file);
+            // move file to static directory
+            var path = __dirname + "/../static/videos/" + file.name + ".original"; 
+            console.log(file);
+            console.log(path);
+            try {
+                await file.mv(path);
+            } catch(err) {
+                console.log(err);
+            }
 
-                // reencode video
-                res.send(json.success("The video was successfully uploaded! Please wait for processing to finish!"));
-                // re-encode the video, then disable the "processing" flag on the video, and set the file url
-                await ffmpeg.encodeVideo(path, config.app.videos.qualities[0], (newPath) => {videoware.disableProcessing(videoID); videoware.updateVideoPath(videoID, newPath);});
-                // delete the original file
-                //fs.unlink(path, (err) => {if(err) {console.log(err);}});
-                break;
+            // reencode video
+            res.send(json.success("The video was successfully uploaded! Please wait for processing to finish!"));
+            // re-encode the video, then disable the "processing" flag on the video, and set the file url
+            await ffmpeg.encodeVideo(path, config.app.videos.qualities[0], (newPath) => {videoware.disableProcessing(videoID); videoware.updateVideoPath(videoID, newPath);});
+            // delete the original file
+            //fs.unlink(path, (err) => {if(err) {console.log(err);}});
+            break;
 
-            default:
-                res.send(json.error("Invalid operation!"));
-                break;
-        }
-    });
+        default:
+            res.send(json.error("Invalid operation!"));
+            break;
+    }
+});
 
     /*  POST
     *   /api/video/update
@@ -264,6 +287,10 @@ module.exports = function(app) {
         res.send(json.success("The video information was updated!"));
     });
 
+    /* =======================
+    *  | COMMENT              |
+    *  =======================*/ 
+
     /*  POST
     *   /api/comment/create
     *   Create a comment!
@@ -277,12 +304,22 @@ module.exports = function(app) {
         var videoID = req.body.videoID;
 
         if(await authkey.authKeyExists(authKey) === false) {
-            res.send(json.error("The authkey sent doesn't exist!"));
+            res.send(json.error("The authkey doesn't exist!"));
+            return;
+        }
+
+        if(await videoware.getVideoByID(videoID)===null) {
+            res.send(json.error("That video doesn't exist!"));
+            return;
+        }
+
+        if(validator.isEmpty(content)) {
+            res.send(json.error("Please put actual text in the comment silly!"));
             return;
         }
 
         // get user that's posting
-        var user = userware.getUserByAuthKey(authKey);
+        var user = await userware.getUserByAuthKey(authKey);
         if(!commentware.createComment(videoID, user, content)) {
             res.send(json.error("The comment failed to post!"));
             return;
