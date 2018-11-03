@@ -113,14 +113,20 @@ var videoware = module.exports = {
     addCommentToVideo: async function(videoID, comment) {
         try {
             var originalComments = await videoModel.findOne({videoID: videoID}); 
-            console.log(originalComments.comments);
-            console.log(comment);
             var newComments = await videoModel.findOneAndUpdate({videoID: videoID}, {$push: {comments: comment}});
             if(originalComments === newComments) {
                 return false;
             } else {
                 return true;
             }
+        } catch(err) {
+            console.log(err);
+        }
+    },
+
+    getAllVideos: async function() {
+        try {
+            return await videoModel.find({});
         } catch(err) {
             console.log(err);
         }

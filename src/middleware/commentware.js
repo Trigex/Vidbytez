@@ -2,14 +2,27 @@ const mongoose = require('mongoose');
 const commentModel = require('../models/comment');
 const shortid = require("shortid");
 const videoware = require("./videoware");
+const userware = require("./userware");
 
 var commentware = module.exports = {
     getCommentsByVideoID: async function(videoID) {
-        var video = await videoware.getVideoByID(videoID);
-        if(video!=null) {
-            return video.comments;
-        } else {
-            return null;
+        try {
+            var video = await videoware.getVideoByID(videoID);
+            if(video!=null) {
+                var comments = [];
+                // convert object IDs into raw comment object
+                for(var comment of video.comments) {
+                    var comment = await commentModel.findById(comment._id);
+                    // convert author id of comment into raw user object
+                    comment.author = await userware.getUserByObjectID(comment.author);
+                    comments.push(comment);
+                }
+                return comments;
+            } else {
+                return null;
+            }
+        } catch(err) {
+            console.log(err);
         }
     },
 

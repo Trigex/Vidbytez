@@ -1,650 +1,129 @@
 <% include partials/header %>
-<main class="bottom_wrapper">
 <% include partials/video_css %>
-    <div class="w_title">
-        <h1>
-            <%=video.title%>
-        </h1>
-    </div>
+<div class="w_title">
+    <h1>
+        <%=video.title%>
+    </h1>
+</div>
 
-    <div id="vtbl" class="">
-        <div id="vtbl_pl" style="padding-bottom: 32px;">
+<div id="vtbl" class="">
+    <div id="vtbl_pl" style="padding-bottom: 32px;">
         <%if(video.processing === true) {%>
-            <h1 class="processing">The video is being proccessed!</h1>
+        <h1 class="processing">The video is being proccessed!</h1>
         <%} else {%>
         <video controls>
             <source src="/videos/<%=video.videoPath%>" type="video/mp4">
         </video>
         <%}%>
-        </div>
-        
-        <!-- INFO -->
-        <div id="vtbl_desc">
-            <div class="wt_des" style="border-top-left-radius: 0;border-top-right-radius: 0">
-                <div> <a href="/user/<%=author.username%>"><img src="/img/avatars/<%=author.avatarPath%>" width="55" height="55" class="avt2 "
-                            alt="<%=author.username%>"></a>
-                    <div class="wt_person"> <a href="/user/<%=author.username%>"><%=author.username%></a><br><%=video.postTime%><br></div>
-                    <!-- SUB -->
-                    <div id="subsbtns"> <a href="javascript:void(0)" class="yel_btn" onclick="alert('You must be logged in to subscribe!')">Subscribe</a>
-                        <a href="/user/KnotSnappy/subscribers" class="yel_btn">585</a> </div>
-                </div>
+    </div>
+
+    <!-- INFO -->
+    <div id="vtbl_desc">
+        <div class="wt_des" style="border-top-left-radius: 0;border-top-right-radius: 0">
+            <div> <a href="/user/<%=author.username%>"><img src="/img/avatars/<%=author.avatarPath%>" width="55" height="55"
+                        class="avt2 " alt="<%=author.username%>"></a>
+                <div class="wt_person"> <a href="/user/<%=author.username%>">
+                        <%=author.username%></a><br>
+                    <%=video.postTime%><br></div>
+                <!-- SUB -->
+                <div id="subsbtns"> <a href="javascript:void(0)" class="yel_btn" onclick="alert('You must be logged in to subscribe!')">Subscribe</a>
+                    <a href="/user/KnotSnappy/subscribers" class="yel_btn">585</a> </div>
+            </div>
+            <div class="cl"></div>
+            <div id="des_text">
+                <%=video.description%>
+            </div>
+            <div id="des_info">
                 <div class="cl"></div>
-                <div id="des_text"><%=video.description%></div>
-                <div id="des_info">
-                    <div class="cl"></div>
-                </div>
-            </div>
-        </div>
-        </div>
-        <div id="vtbl_actions">
-            <div class="w_actions">
-                <!-- TO DO -->
-                <div id="ratings">85 ratings</div>
-                <div class="w_views"><strong>1,095</strong> views</div>
-                <div class="w_lnks"><img
-                            src="https://i.r.worldssl.net/img/hehd0.png" id="w_fv"><span>Favorite</span><img src="https://i.r.worldssl.net/img/flhd0.png"
-                            id="w_fl"><span>Flag</span>
-                </div>
-            </div>
-            <div class="w_btm">
-                <div style="display:table;width:100%">
-                    <div class="w_big_btn big_sel" id="w_com">
-                        <a href="javascript:void(0)">Commentary</a>
-                    </div>
-                    <div class="w_big_btn" id="w_stats">
-                        <a href="javascript:void(0)">Statistics</a>
-                    </div>
-                </div>
-                <div class="cl"></div>
-                <div id="w_com_sct">
-                    <div style="display:block; word-wrap: break-word">
-                        <div id="video_comments_section">
-                            <div class="wt_c_sct" id="wt_147617">
-                                <div>
-                                    <a href="/user/STFOUCH0">STFOUCH0</a> <span>(8 hours ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/STFOUCH0"><img src="https://i.r.worldssl.net/usfi/avt/WgN3x51SXUg.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="STFOUCH0"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        vidii </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_147224">
-                                <div>
-                                    <a href="/user/zowaziluz">zowaziluz</a> <span>(1 day ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/zowaziluz"><img src="https://i.r.worldssl.net/usfi/avt/uDh4jECYoEi.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="zowaziluz"></a>
-                                    <div>
-                                        <span style="color:green">1</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        THANK you. Just decided to join because of "muh nostalgia" but it's good
-                                        memories, and this vid has filled me in a lot. Thank you </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_147276" op="147224" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(1 day ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/zowaziluz">@zowaziluz</a> thanks for watchin' it! :) </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_147014">
-                                <div>
-                                    <a href="/user/Martinboorman1963">Martinboorman1963</a> <span>(2 days ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/Martinboorman1963"><img src="https://i.r.worldssl.net/usfi/avt/M5y3ahC09OQ.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="Martinboorman1963"></a>
-                                    <div>
-                                        <span style="color:green">1</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        well done i never knew about this i joined a week ago </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_147134" op="147014" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(2 days ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/Martinboorman1963">@Martinboorman1963</a> welcome to the site :D
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_145956">
-                                <div>
-                                    <a href="/user/Nikita">Nikita</a> <span>(6 days ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/Nikita"><img src="https://i.r.worldssl.net/usfi/avt/tqqpwvJQv5f.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="Nikita"></a>
-                                    <div>
-                                        <span style="color:green">2</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        A lot of new stuff I did not know about VidLii so far .. thanks for taking the
-                                        time to put together this summary! Keep up the informative work :) </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_147135" op="145956" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(2 days ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/Nikita">@Nikita</a> thanks! </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_145168">
-                                <div>
-                                    <a href="/user/BossTronPie">BossTronPie</a> <span>(1 week ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/BossTronPie"><img src="https://i.r.worldssl.net/usfi/avt/croFgDgK21E.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="BossTronPie"></a>
-                                    <div>
-                                        <span style="color:green">1</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        How tf can I test the modern design? </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_145547" op="145168" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(1 week ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/BossTronPie">@BossTronPie</a> don't think it's public yet </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_144631">
-                                <div>
-                                    <a href="/user/IHateLiberalsAndLGBT">IHateLiberalsAndLGBT</a> <span>(1 week ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/IHateLiberalsAndLGBT"><img src="https://i.r.worldssl.net/usfi/avt/g2ALKvA3Fu2.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="IHateLiberalsAndLGBT"></a>
-                                    <div>
-                                        <span style="color:green">4</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        Modern Layouts suck, they're just buggy, ugly, and slow like YouTube's. </div>
-                                </div>
-                            </div>
-                            <a href="javascript:void(0)" class="show_more" onclick="show_all_replies(144631)" id="sa_144631">Show
-                                all 5 replies</a>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_144814" op="144631" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(1 week ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span style="color:green">1</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/Patchouli">@Patchouli</a> it's just an <i>option</i> for those
-                                        that don't like the current one :P </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct wt_r_sct" id="wt_144816" op="144631" data-op-user="Patchouli">
-                                <div>
-                                    <a href="/user/Patchouli">Patchouli</a> <span>(1 week ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/Patchouli"><img src="https://i.r.worldssl.net/usfi/avt/7nlj7iT1tpg.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="Patchouli"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/KnotSnappy">@KnotSnappy</a> ah ok. good to know ^_^ </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_144511">
-                                <div>
-                                    <a href="/user/WeirdBeardDude">WeirdBeardDude</a> <span>(1 week ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/WeirdBeardDude"><img src="https://i.r.worldssl.net/usfi/avt/1mALc0RgYbZ.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="WeirdBeardDude"></a>
-                                    <div>
-                                        <span style="color:green">1</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        I'm not going to lie, I appreciate the information.<br>
-                                        <br>
-                                        However, I would enjoy you to slow down just a tad.<br>
-                                        <br>
-                                        That's all.<br>
-                                        Not A+ but how about an A? </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_144609" op="144511" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(1 week ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span style="color:green">2</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/WeirdBeardDude">@WeirdBeardDude</a> Thanks! lol I'll take an A
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_144394">
-                                <div>
-                                    <a href="/user/lemon">lemon</a> <span>(1 week ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/lemon"><img src="https://i.r.worldssl.net/usfi/avt/hMYvhlmsUYy.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="lemon"></a>
-                                    <div>
-                                        <span style="color:green">2</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        what the heck is vidlii </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_147054" op="144394" data-op-user="Abridgelion">
-                                <div>
-                                    <a href="/user/Abridgelion">Abridgelion</a> <span>(2 days ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/Abridgelion"><img src="https://i.r.worldssl.net/usfi/avt/qVZa0tQPF6y.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="Abridgelion"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/lemon">@lemon</a> <a href="/user/lemon">@lemon</a>: Vid.Me's
-                                        broke twin cousin. </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_144040">
-                                <div>
-                                    <a href="/user/FusRoDa49">FusRoDa49</a> <span>(2 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/FusRoDa49"><img src="https://i.r.worldssl.net/usfi/avt/zL5y5SoFKvO.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="FusRoDa49"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        <a href="/user/KnotSnappy">@KnotSnappy</a> still up after 2 weeks. also i did
-                                        not know vidlii took after yt's 2005 layout before the one were using now.
-                                        great vid! </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_144062" op="144040" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(2 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/FusRoDa49">@FusRoDa49</a> thanks! </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_143393">
-                                <div>
-                                    <a href="/user/Dillymackey">Dillymackey</a> <span>(2 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/Dillymackey"><img src="https://i.r.worldssl.net/usfi/avt/0R8y0shFCbW.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="Dillymackey"></a>
-                                    <div>
-                                        <span style="color:green">4</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        A+ </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_143456" op="143393" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(2 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/Dillymackey">@Dillymackey</a> thank </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct wt_r_sct" id="wt_146693" op="143393" data-op-user="JacksepticNose">
-                                <div>
-                                    <a href="/user/JacksepticNose">JacksepticNose</a> <span>(3 days ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/JacksepticNose"><img src="https://i.r.worldssl.net/usfi/avt/JydYvF2YkRQ.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="JacksepticNose"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/KnotSnappy">@KnotSnappy</a> B&lt; </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_143066">
-                                <div>
-                                    <a href="/user/MrArcadeRetroGamer64">MrArcadeRetroGamer64</a> <span>(3 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/MrArcadeRetroGamer64"><img src="https://i.r.worldssl.net/usfi/avt/BmTZDFCP1Df.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="MrArcadeRetroGamer64"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        Great video. </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_142848">
-                                <div>
-                                    <a href="/user/TrainwreckPro">TrainwreckPro</a> <span>(3 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/TrainwreckPro"><img src="https://i.r.worldssl.net/usfi/avt/2prJihDP05V.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="TrainwreckPro"></a>
-                                    <div>
-                                        <span style="color:green">1</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        I'm a fan! amazing work my friend,! </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_142902" op="142848" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(3 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/TrainwreckPro">@TrainwreckPro</a> thx! </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_142825">
-                                <div>
-                                    <a href="/user/Nihatemoon">Nihatemoon</a> <span>(3 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/Nihatemoon"><img src="https://i.r.worldssl.net/usfi/avt/fDCe7eX7n7f.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="Nihatemoon"></a>
-                                    <div>
-                                        <span style="color:green">2</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        what more is gonna take for vidlii to gain more popularity </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_142903" op="142825" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(3 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span style="color:green">1</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/Nihatemoon">@Nihatemoon</a> a lot </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_142778">
-                                <div>
-                                    <a href="/user/Koltin">Koltin</a> <span>(3 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/Koltin"><img src="https://i.r.worldssl.net/usfi/avt/xJIlWfgyo6j.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="Koltin"></a>
-                                    <div>
-                                        <span style="color:green">1</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        "more modern layout" fuck that, I'll delete my vidlii account </div>
-                                </div>
-                            </div>
-
-                            <div class="wt_c_sct wt_r_sct" id="wt_142808" op="142778" data-op-user="KnotSnappy">
-                                <div style="background:#fffcc2">
-                                    <a href="/user/KnotSnappy">KnotSnappy</a> <span>(3 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/KnotSnappy"><img src="/usfi/thmp/qFmzacNOKp7.jpg" width="41" height="41"
-                                            class="avt2 wp_avt" alt="KnotSnappy"></a>
-                                    <div>
-                                        <span style="color:green">2</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div style="width:442px">
-                                        <a href="/user/Koltin">@Koltin</a> it's gonna be an option not forced </div>
-                                </div>
-                            </div>
-                            <div class="wt_c_sct" id="wt_142072">
-                                <div>
-                                    <a href="/user/200709">200709</a> <span>(3 weeks ago)</span>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="/user/200709"><img src="https://i.r.worldssl.net/usfi/avt/LNhELs9xjB4.jpg"
-                                            width="41" height="41" class="avt2 wp_avt" alt="200709"></a>
-                                    <div>
-                                        <span>0</span>
-                                        <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
-                                            src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
-                                    </div>
-                                    <div>
-                                        speak slowar!!!!! </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w_pag">
-                            <span class="p_yes">1</span> <a href="?v=rndP2IIYkAa&amp;p=2">2</a> <a href="?v=rndP2IIYkAa&amp;p=3">3</a>
-                            <a href="?v=rndP2IIYkAa&amp;p=2">Next</a> </div>
-                        <div style="text-align:center;margin: 13px 0 5px">
-                            <a href="/register">Sign up</a> for a free account, or <a href="/login">sign in</a> to post
-                            a comment.
-                        </div>
-                    </div>
-                </div>
-                <div id="w_stats_sct" class="hddn">
-                    <table style="width:88%;margin:0 0 0 61px" cellpadding="5">
-                        <tbody>
-                            <tr>
-                                <td>Date: <strong>
-                                        <date>Sep 24, 2018</date>
-                                    </strong></td>
-                                <td>Views: <strong>1,095</strong></td>
-                                <td>Ratings: <strong>85</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Time: <strong><time>01:29 AM</time></strong></td>
-                                <td>Comments: <strong>39</strong></td>
-                                <td>Favorites: <strong>19</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div style="width:468px;margin:8px auto">
-                <ins class="adsbygoogle" style="display:inline-block;width:468px;height:60px" data-ad-client="ca-pub-8433080377364721"
-                    data-ad-slot="9293871292"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
             </div>
         </div>
     </div>
-</main>
-<% include partials/footer %>
+</div>
+<div id="vtbl_actions">
+    <div class="w_actions">
+        <!-- TO DO -->
+        <div id="ratings">85 ratings</div>
+        <div class="w_views"><strong>1,095</strong> views</div>
+        <div class="w_lnks"><img src="https://i.r.worldssl.net/img/hehd0.png" id="w_fv"><span>Favorite</span><img src="https://i.r.worldssl.net/img/flhd0.png"
+                id="w_fl"><span>Flag</span>
+        </div>
+    </div>
+    <div class="w_btm">
+        <div style="display:table;width:100%">
+            <div class="w_big_btn big_sel" id="w_com">
+                <a href="javascript:void(0)">Commentary</a>
+            </div>
+            <div class="w_big_btn" id="w_stats">
+                <a href="javascript:void(0)">Statistics</a>
+            </div>
+        </div>
+        <div class="cl"></div>
+        <div id="w_com_sct">
+            <div style="display:block; word-wrap: break-word">
+                <div id="video_comments_section">
+                    <div style="display:block; word-wrap: break-word">
+                    <div id="video_comments_section">
+                        <% if(comments.length==0) { %>
+                            <div id="no_video_comments">This video has no comments yet!</div>
+                        <% } %>      
+                        <% if(session.username) { %>
+                            <div style="margin: 13px 0 5px">
+                                    <div style="font-weight:bold;font-size:16px;margin:0 0 4px">Post a Comment:</div>
+                                    <textarea id="comment_textarea" style="height:80px" rows="5" maxlength="1000" placeholder="Your Comment..."></textarea>
+                                    <div>
+                                        <button type="button" class="search_button" id="comment_submit">Post
+                                            Comment</button><span class="tiny_text"> <span id="counter">0</span> / 1000</span>
+                                    </div>
+                            </div>
+                            <p hidden id='videoid'><%=video.videoID%></p>
+                        <% } else { %>
+                            <div id="no_video_comments">Please login to post a comment!</div>
+                        <% } %>
+                    </div>
+                    <!-- COMMENTS -->
+                    <% comments.forEach(function(comment){ %>
+                    <div class="wt_c_sct" id="wt_147617">
+                        <div>
+                            <a href="/user/<%=comment.author.username%>">
+                                <%=comment.author.username%></a> <span>(
+                                <%= comment.timestamp %>)</span>
+                            <div>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="/user/<%=comment.author.username%>"><img src="/img/avatars/<%=comment.author.avatarPath%>"
+                                    width="41" height="41" class="avt2 wp_avt" alt="<%=comment.author.username%>"></a>
+                            <div>
+                                <span>0</span>
+                                <img src="https://i.r.worldssl.net/img/td0.png" onclick="alert('Please sign in to rate this comment')"><img
+                                    src="https://i.r.worldssl.net/img/tu0.png" onclick="alert('Please sign in to rate this comment')">
+                            </div>
+                            <div>
+                                <%= comment.content %>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+
+                    <div id="w_stats_sct" class="hddn">
+                        <table style="width:88%;margin:0 0 0 61px" cellpadding="5">
+                            <tbody>
+                                <tr>
+                                    <td>Date: <strong>
+                                            <date>Sep 24, 2018</date>
+                                        </strong></td>
+                                    <td>Views: <strong>1,095</strong></td>
+                                    <td>Ratings: <strong>85</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Time: <strong><time>01:29 AM</time></strong></td>
+                                    <td>Comments: <strong>39</strong></td>
+                                    <td>Favorites: <strong>19</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% include partials/footer %>

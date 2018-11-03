@@ -24,7 +24,7 @@ module.exports = function(app) {
     *  =======================*/
 
     /* =======================
-    *  | META                |
+    *  | META(GET)           |
     *  =======================*/ 
    app.get(uriBase + "version", function(req, res){
     res.send(JSON.stringify({version: config.app.build.version}));
@@ -35,7 +35,7 @@ module.exports = function(app) {
     *  =======================*/
 
     /* =======================
-    *  | USER                |
+    *  | USER(POST)          |
     *  =======================*/ 
     
     /*  POST
@@ -146,7 +146,7 @@ module.exports = function(app) {
     });
     
     /* =======================
-    *  | VIDEO               |
+    *  | VIDEO(POST)         |
     *  =======================*/ 
     
     /*  POST
@@ -288,7 +288,7 @@ module.exports = function(app) {
     });
 
     /* =======================
-    *  | COMMENT              |
+    *  | COMMENT(POST)       |
     *  =======================*/ 
 
     /*  POST

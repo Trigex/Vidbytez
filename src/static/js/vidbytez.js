@@ -98,6 +98,16 @@ $("#user_register").submit((event) => {
     });
 });
 
+$("#comment_submit").click(() => {
+    var videoID = $("#videoid").text();
+    var content = $("#comment_textarea").val();
+    ajaxRequest("/api/comment/create", "POST", {
+        authKey: readCookie("authKey"),
+        content: content,
+        videoID: videoID
+    });
+})
+
 $("#logout").click(() => {
     $.ajax({
         url: "/api/user/logout",

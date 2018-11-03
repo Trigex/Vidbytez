@@ -1,5 +1,3 @@
 node_modules/
 config.json
 src/static/videos/
-src/static/img/avatars/*
-src/static/img/thumb/*
