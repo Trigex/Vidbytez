@@ -186,7 +186,7 @@ function upload_video(video, videoID) {
     formData.append("videoID", videoID);
     var ajax = new XMLHttpRequest();
     ajax.upload.addEventListener("progress", videoProgressHandle, false);
-    ajax.addEventListener("load", videoCompleteHandle, false);
+    ajax.addEventListener("load", videoCompleteHandle(event, videoID), false);
     ajax.addEventListener("error", videoErrorHandle, false);
     ajax.addEventListener("abort", videoAbortHandle, false);
     ajax.open("POST", "/api/video/upload");
@@ -199,8 +199,9 @@ function videoProgressHandle(event) {
     $("#video_progress_text").text(Math.round(percent) + "%");
 }
 
-function videoCompleteHandle(event) {
+function videoCompleteHandle(event, videoID) {
     createNotification("The video was uploaded!!! Now be patient, we gotta process it!", "success");
+    $("#video_title_header").append("<p>Your video will be live <a href='/video/" + videoID + "'>here</a></p>");
 }
 
 function videoErrorHandle(event) {

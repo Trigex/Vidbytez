@@ -56,7 +56,7 @@ var videoware = module.exports = {
     createVideo: async function(title, postTime, author) {
         try {
             var videoID = shortid.generate();
-            await videoModel.create({title: title, postTime: postTime, author: author, videoID: videoID, postTime: Date.now(), processing: true});
+            await videoModel.create({title: title, postTime: postTime, author: author, videoID: videoID, postTime: new Date(Date.now()).toLocaleString(), processing: true});
             
             var newVideo = await videoModel.find({videoID: videoID});
 
@@ -105,6 +105,20 @@ var videoware = module.exports = {
     disableProcessing: async function(videoID) {
         try {
             await videoModel.findOneAndUpdate({videoID: videoID}, {processing: false});
+        } catch(err) {
+            console.log(err);
+        }
+    },
+    // return true if change happened, false if not
+    addCommentToVideo: async function(videoID, comment) {
+        try {
+            var originalComments = await videoModel.findOne({videoID: videoID}).comments; 
+            var newComments = await videoModel.findOneAndUpdate({videoID: videoID}, {comments: comment});
+            if(originalComments === newComments) {
+                return false;
+            } else {
+                return true;
+            }
         } catch(err) {
             console.log(err);
         }

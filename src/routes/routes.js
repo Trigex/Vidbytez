@@ -29,8 +29,12 @@ module.exports = function(app) {
             res.render("video", {config: config, session: req.session, video: video, author: author});
         } else {
             // 404
-            res.render("404", {config: config, session: req.session});
+            res.redirect("/404");
         }
+    });
+
+    app.get("/404", function(req, res){
+        res.render("404", {config: config, session: req.session})
     });
 
     app.get("/upload", function(req, res){

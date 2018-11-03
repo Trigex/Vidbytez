@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var commentSchema = new mongoose.Schema({
-    authorUserID: String, // author of the comment
+    author: {type: mongoose.Schema.ObjectId, ref: 'User'}, // author of the comment
     content: String, // content of the comment
     timestamp: String, // timestamp of comment posting
     likes: Number, // total likes on the comment

@@ -1,14 +1,17 @@
 const config = require('../../config.json');
 const uriBase = "/api/";
-const json = require("../utils/json");
-const bcryptUtil = require("../utils/bcrypt_utils");
+// middleware
 const userware = require("../middleware/userware");
 const videoware = require("../middleware/videoware");
+const commentware = require("../middleware/commentware");
+// utils
+const json = require("../utils/json");
+const bcryptUtil = require("../utils/bcrypt_utils");
 const validator = require("validator");
 const session = require("../utils/session");
 const hat = require("hat");
 const ffmpeg = require("../utils/ffmpeg_utils");
-const regex = require("../utils/regex_utils");
+const authkey = require("../utils/authkey");
 //const fs = require("fs");
 
 module.exports = function(app) {
@@ -225,7 +228,7 @@ module.exports = function(app) {
         var authKey = req.body.authKey;
         var videoID = req.body.videoID;
 
-        if(await userware.authKeyExists(authKey) === false) {
+        if(authkey.authKeyExists(authKey) === false) {
             res.send(json.error("The authkey sent doesn't exist!"));
             return;
         }
@@ -259,5 +262,33 @@ module.exports = function(app) {
             return;
         }
         res.send(json.success("The video information was updated!"));
+    });
+
+    /*  POST
+    *   /api/comment/create
+    *   Create a comment!
+    *   @param authKey authkey of the user posting
+    *   @param videoID video to post to
+    *   @param content the contents of the comment
+    */
+    app.post(uriBase + "comment/create", async function(req, res) {
+        var authKey = req.body.authKey;
+        var content = req.body.content;
+        var videoID = req.body.videoID;
+
+        if(await authkey.authKeyExists(authKey) === false) {
+            res.send(json.error("The authkey sent doesn't exist!"));
+            return;
+        }
+
+        // get user that's posting
+        var user = userware.getUserByAuthKey(authKey);
+        if(!commentware.createComment(videoID, user, content)) {
+            res.send(json.error("The comment failed to post!"));
+            return;
+        }
+
+        res.send(json.success("The comment was posted!"));
+        return;
     });
 }
