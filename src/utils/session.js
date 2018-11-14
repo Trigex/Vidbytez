@@ -1,3 +1,8 @@
+/*   Vidbytez
+ *   (c) Trigex 2018
+ *   Licensed under the MIT License
+*/
+
 var session = module.exports = {
     createSession: function(session, username, authKey) {
         session.username = username;

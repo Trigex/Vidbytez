@@ -1,3 +1,8 @@
+/*   Vidbytez
+ *   (c) Trigex 2018
+ *   Licensed under the MIT License
+*/
+
 var mongoose = require('mongoose');
 
 var pmSchema = new mongoose.Schema({

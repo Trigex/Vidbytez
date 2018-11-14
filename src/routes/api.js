@@ -1,3 +1,8 @@
+/*   Vidbytez
+ *   (c) Trigex 2018
+ *   Licensed under the MIT License
+*/
+
 /*
 *   heh.... kid....... welcum to this little thing I call hell.................... can you handle it..... ??
 */

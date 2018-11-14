@@ -1,3 +1,8 @@
+/*   Vidbytez
+ *   (c) Trigex 2018
+ *   Licensed under the MIT License
+*/
+
 var json = module.exports = {
     error: function(errorMessage) {
         return JSON.stringify({error: errorMessage});

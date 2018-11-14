@@ -1,3 +1,8 @@
+/*   Vidbytez
+ *   (c) Trigex 2018
+ *   Licensed under the MIT License
+*/
+
 const config = require('../../config.json');
 const videoware = require("../middleware/videoware");
 const userware = require("../middleware/userware");

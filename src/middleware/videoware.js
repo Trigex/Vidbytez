@@ -1,3 +1,8 @@
+/*   Vidbytez
+ *   (c) Trigex 2018
+ *   Licensed under the MIT License
+*/
+
 const mongoose = require('mongoose');
 const videoModel = require('../models/video');
 const shortid = require("shortid");

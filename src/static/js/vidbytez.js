@@ -1,7 +1,7 @@
 /*   Vidbytez
  *   (c) Trigex 2018
  *   Licensed under the MIT License
- */
+*/
 
 function createCookie(key, value, date) {
     var expiration = new Date(date).toUTCString();
@@ -249,7 +249,6 @@ var rated = false;
 $(function () {
     // init
     if(window.location['pathname'].includes("video")) {
-        var rated
         initRateYo();
     }
 });

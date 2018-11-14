@@ -1,3 +1,8 @@
+/*   Vidbytez
+ *   (c) Trigex 2018
+ *   Licensed under the MIT License
+*/
+
 var userware = require("../middleware/userware");
 
 var authkey = module.exports = {

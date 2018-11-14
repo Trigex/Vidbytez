@@ -1,3 +1,8 @@
+/*   Vidbytez
+ *   (c) Trigex 2018
+ *   Licensed under the MIT License
+*/
+
 const bcrypt = require('bcrypt');
 
 var passwords = module.exports = {

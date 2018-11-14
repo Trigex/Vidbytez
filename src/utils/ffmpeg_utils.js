@@ -1,3 +1,8 @@
+/*   Vidbytez
+ *   (c) Trigex 2018
+ *   Licensed under the MIT License
+*/
+
 const ffmpeg = require("fluent-ffmpeg");
 const config = require(__dirname+"/../../config.json");
 const regex = require("../utils/regex_utils");
