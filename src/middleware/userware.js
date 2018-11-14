@@ -44,7 +44,7 @@ var userware = module.exports = {
     */
    createUser: async function(username, hashedPassword, email) {
         try {
-            await userModel.create({username: username, password: hashedPassword, email: email, creation: Date.now(), auth: 0, userID: shortid.generate(), channelName: username, bio: "I'm a very boring person.", avatarPath: "none.png"});
+            await userModel.create({username: username, password: hashedPassword, email: email, creation: Date.now(), auth: 0, userID: shortid.generate(), channelName: username, bio: "I'm a very boring person.", avatarPath: "none.png", ratedVideos: []});
             
             var newUser = await userModel.find({username: username});
 
@@ -57,8 +57,8 @@ var userware = module.exports = {
             console.log(err);
         }
     },
-
-    getUser: async function(username) {
+    // return null if the user doesn't exist, otherwise return the user
+    getUserByUsername: async function(username) {
         try {
             var user = await userModel.findOne({username: username});
 
@@ -72,7 +72,7 @@ var userware = module.exports = {
             console.log(err);
         }
     },
-
+    // return null if the user doesn't exist, otherwise return the user
     getUserByObjectID: async function(objectID) {
         try {
             var user = await userModel.findOne({_id: objectID});
@@ -86,7 +86,6 @@ var userware = module.exports = {
             console.log(err);
         }
     },
-
     /*
     *   Gets the hashed password of a given user,
     *   returns the password if the user was found,
@@ -124,7 +123,7 @@ var userware = module.exports = {
             console.log(err);
         }
     },
-
+    // destroy authkey of a given user
     destroyAuthKey: async function(username) {
         try {
             var user = await userModel.findOneAndUpdate({username: username}, {$set:{authKey: null}}, {new: true});
@@ -132,8 +131,7 @@ var userware = module.exports = {
             console.log(err);
         }
     },
-
-    getAuthKey: async function(username) {
+    getAuthKeyByUsername: async function(username) {
         try {
             var user = await userModel.findOne({username: username});
 
@@ -172,5 +170,35 @@ var userware = module.exports = {
         } catch(err) {
             console.log(err);
         }
+    },
+
+    addRatedVideo: async function(videoID, authKey) {
+        try {
+            var user = await userModel.findOneAndUpdate({authKey: authKey}, {$push: {ratedVideos: videoID}});
+            if(!user) {
+                return null;
+            } else {
+                return true;
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    },
+
+    getRatedVideosByAuthKey: async function(authKey) {
+        try {
+            var rated = await userModel.findOne({authKey: authKey});
+            return rated.ratedVideos;
+        } catch(err) {
+            console.log(err);
+        }
+    },
+
+    stripSensitiveData: function(user) {
+        user.email = undefined;
+        user.authKey = undefined;
+        user.password = undefined;
+        user._id = undefined;
+        return user;
     }
 }

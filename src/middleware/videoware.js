@@ -56,7 +56,7 @@ var videoware = module.exports = {
     createVideo: async function(title, postTime, author) {
         try {
             var videoID = shortid.generate();
-            await videoModel.create({title: title, postTime: postTime, author: author, videoID: videoID, postTime: new Date(Date.now()).toLocaleString(), processing: true});
+            await videoModel.create({title: title, postTime: postTime, author: author, videoID: videoID, postTime: new Date(Date.now()).toLocaleString(), processing: true, views: 0});
             
             var newVideo = await videoModel.find({videoID: videoID});
 
@@ -102,6 +102,14 @@ var videoware = module.exports = {
         }
     },
 
+    updateThumbnailPath: async function(videoID, path) {
+        try {
+            await videoModel.findOneAndUpdate({videoID: videoID}, {thumbnailPath: path});
+        } catch(err) {
+            console.log(err);
+        }
+    },
+
     disableProcessing: async function(videoID) {
         try {
             await videoModel.findOneAndUpdate({videoID: videoID}, {processing: false});
@@ -127,6 +135,47 @@ var videoware = module.exports = {
     getAllVideos: async function() {
         try {
             return await videoModel.find({});
+        } catch(err) {
+            console.log(err);
+        }
+    },
+
+    incrementViews: async function(videoID) {
+        try {
+            var video = await videoModel.findOne({videoID: videoID});
+            var views = video.views;
+            if(!video) {
+                return null;
+            }
+            await videoModel.findOneAndUpdate({videoID: videoID}, {views: views+1});
+            return true;
+        } catch(err) {
+            console.log(err);
+        }
+    },
+
+    addRating: async function(videoID, userID, rating) {
+        try {
+            var original = await videoModel.findOne({videoID: videoID}); 
+            var newVid = await videoModel.findOneAndUpdate({videoID: videoID}, {$push: {ratings: rating}});
+            if(original === newVid) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    },
+
+    getRatingsByVideoID: async function(videoID) {
+        try {
+            var video = await this.getVideoByID(videoID);
+            if(video === null) {
+                return null;
+            } else {
+                return video.ratings;
+            }
         } catch(err) {
             console.log(err);
         }

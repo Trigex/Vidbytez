@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var videoSchema = new mongoose.Schema({
-    videoPath: String, // path to video file on cdn
+    videoPath: String, // video filename
     title: String, // title of the video
     views: Number, // total number of page loads
     ratings: [Number], // 1-5 rating scale, averaged on load 
@@ -11,7 +11,8 @@ var videoSchema = new mongoose.Schema({
     videoID: String,
     description: String,
     tags: String,
-    processing: Boolean // is the video currently being proccessed/uploaded?
+    processing: Boolean, // is the video currently being proccessed/uploaded?
+    thumbnailPath: String // thumbnail filename
 });
 
 module.exports = mongoose.model("Video", videoSchema);

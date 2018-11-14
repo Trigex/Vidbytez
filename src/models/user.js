@@ -16,7 +16,8 @@ var userSchema = new mongoose.Schema({
     friends: [{type: mongoose.Schema.ObjectId, ref: 'User'}], // friends of the user
     bio: String, // the user's bio
     intrests: String, // user intrests
-    links: [String] // links
+    links: [String], // links
+    ratedVideos: [String] // list of video's (videoID) the user has rated
 });
 
 module.exports = mongoose.model("User", userSchema);

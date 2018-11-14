@@ -22,6 +22,10 @@ module.exports = function(app) {
         res.render("register", {config: config, session: req.session});
     });
 
+    app.get("/opensource", function(req, res){
+        res.render("opensource", {config: config, session: req.session});
+    });
+
     app.get("/video/:id", async function(req, res){
         // get video
         var videoID = req.params.id;
@@ -30,7 +34,10 @@ module.exports = function(app) {
             // get author
             var author = await userware.getUserByObjectID(video.author);
             var comments = await commentware.getCommentsByVideoID(videoID);
-            console.log(comments);
+            // add a view, change this later to be less exploitable
+            if(!video.processing)
+                await videoware.incrementViews(videoID);
+            
             res.render("video", {config: config, session: req.session, video: video, author: author, comments: comments});
         } else {
             // 404

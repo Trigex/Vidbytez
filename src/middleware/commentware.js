@@ -5,6 +5,7 @@ const videoware = require("./videoware");
 const userware = require("./userware");
 
 var commentware = module.exports = {
+    // return null if the video wasn't found, otherwise return video comments
     getCommentsByVideoID: async function(videoID) {
         try {
             var video = await videoware.getVideoByID(videoID);
@@ -16,12 +17,7 @@ var commentware = module.exports = {
                     var comment = await commentModel.findById(comment._id);
                     // convert author id of comment into raw user object
                     comment.author = await userware.getUserByObjectID(comment.author);
-                    // delete sensitive data or otherwise uneeded data from author
-                    comment.author.email = undefined;
-                    comment.author.authKey = undefined;
-                    comment.author.password = undefined;
-                    comment.author._id = undefined;
-                    comment.author.creation = undefined;
+                    comment.author = userware.stripSensitiveData(comment.author);
                     comments.push(comment);
                 }
                 return comments;
@@ -32,7 +28,6 @@ var commentware = module.exports = {
             console.log(err);
         }
     },
-
     createComment: async function(videoID, author, content) {
         try {
             var comment = await commentModel.create({author: author, content: content, timestamp: new Date(Date.now()).toLocaleString()});

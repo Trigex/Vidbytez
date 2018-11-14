@@ -1,7 +1,7 @@
 /*
 *   heh.... kid....... welcum to this little thing I call hell.................... can you handle it..... ??
 */
-
+// fuck
 const config = require('../../config.json');
 const uriBase = "/api/";
 // middleware
@@ -105,7 +105,7 @@ module.exports = function(app) {
 
         // insert user into database
         if(await userware.createUser(username, password, email) == true) {
-            // create apikey
+            // create authKey
             var authKey = hat();
             console.log(authKey);
             // store authkey
@@ -131,7 +131,7 @@ module.exports = function(app) {
         var password = req.body.password;
         var create_session = req.body.create_session;
 
-        var user = await userware.getUser(username);
+        var user = await userware.getUserByUsername(username);
         if(user === null) {
             res.send(json.error("That user doesn't exist!"));
             return;
@@ -139,7 +139,7 @@ module.exports = function(app) {
 
         if(await bcryptUtil.checkPassword(password, user.password)) {
             // get authkey
-            var authKey = await userware.getAuthKey(username);
+            var authKey = await userware.getAuthKeyByUsername(username);
             console.log(authKey);
             if(create_session) {
                 session.createSession(req.session, username, authKey);
@@ -153,19 +153,16 @@ module.exports = function(app) {
     });
 
     /*  POST
-    *   @param destroy_session Boolean, should a session be destroyed too?
+    *   Destroy session
     */
     app.post(uriBase + 'user/logout', async function(req, res) {
         var username = req.session.username;
-        var destroy_session = req.body.destroy_session;
-        if(destroy_session) {
-            if(!username) {
-                res.send(json.error("No session was found to end!"));
-                return;
-            } else {
-                session.destroySession(req.session);
-                res.send(json.success("You've logged out! Come back soon please~"));
-            }
+        if(!username) {
+            res.send(json.error("No session was found to end!"));
+            return;
+        } else {
+            session.destroySession(req.session);
+            res.send(json.success("You've logged out! Come back soon please~"));
         }
     });
     
@@ -248,8 +245,10 @@ module.exports = function(app) {
             // reencode video
             res.send(json.success("The video was successfully uploaded! Please wait for processing to finish!"));
             // re-encode the video, then disable the "processing" flag on the video, and set the file url
+            await ffmpeg.createThumbnail(path, (path) => {videoware.updateThumbnailPath(videoID, path)});
             await ffmpeg.encodeVideo(path, config.app.videos.qualities[0], (newPath) => {videoware.disableProcessing(videoID); videoware.updateVideoPath(videoID, newPath);});
             // delete the original file
+            // breaks shit, not sure why
             //fs.unlink(path, (err) => {if(err) {console.log(err);}});
             break;
 
@@ -309,6 +308,60 @@ module.exports = function(app) {
             return;
         }
         res.send(json.success("The video information was updated!"));
+    });
+
+    /*  GET
+    *   /api/video/:videoID/ratings
+    *   get an array of the ratings of a given video
+    */
+    app.get(uriBase + "video/:videoID/ratings", async function(req, res){
+        var videoID = req.params.videoID;
+        var ratings = await videoware.getRatingsByVideoID(videoID);
+        if(ratings === null) {
+            res.send(json.error("The video was not found!"));
+            return;
+        }
+        res.send(JSON.stringify({ratings: ratings}));
+        return;
+    });
+
+    /*  POST
+    *   /api/video/rating
+    *   Submit a rating!
+    *   @param authKey authkey of the user sending
+    *   @param videoID video to add rating to
+    *   @param rating 1-5 rating
+    */
+    app.post(uriBase + "video/rating", async function(req, res){
+        var authKey = req.body.authKey;
+        var videoID = req.body.videoID;
+        var rating = req.body.rating;
+
+        if(await authkey.authKeyExists(authKey) === false) {
+            res.send(json.error("The authkey doesn't exist!"));
+            return;
+        }
+
+        if(await videoware.getVideoByID(videoID)===null) {
+            res.send(json.error("That video doesn't exist!"));
+            return;
+        }
+        var rated = await userware.getRatedVideosByAuthKey(authKey);
+        if(rated.includes(videoID)) {
+            res.send(json.error("You can only rate a video once!"));
+            return;
+        }
+
+        if(validator.isEmpty(rating) || !validator.isInt(rating) || rating > 5 || rating < 1) {
+            res.send(json.error("Send a real rating...!"));
+            return;
+        }
+
+        var user = await userware.getUserByAuthKey(authKey);
+        console.log(await videoware.addRating(videoID, user, rating));
+        await userware.addRatedVideo(videoID, authKey);
+        res.send(json.success("The video was rated!"));
+        return;
     });
 
     /* =======================

@@ -19,5 +19,18 @@ var ffmpeg_utils = module.exports = {
         .on("end", () => {console.log("The render completed!"); cb(output_filename);})
         .run();
         
+    },
+
+    createThumbnail: async function(path, cb) {
+        var filename = regex.getFilenameFromPath(path);
+        var output_filename = filename + "-thumb.png";
+        var output = __dirname + "/../static/img/thumb/";
+        await ffmpeg(path)
+        .screenshot({
+            folder: output,
+            filename: output_filename,
+            timestamps: ["1%"]
+        })
+        .on("end", () => {cb(output_filename);});
     }
 }

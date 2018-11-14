@@ -30,6 +30,12 @@ function deleteCookie(name) {
     createCookie(name, "", -1);
 }
 
+function arraySum(arr) {
+    return arr.reduce(function(a,b){
+        return a+b;
+    }, 0);
+}
+
 function isEmptyOrSpaces(str) {
     return str === null || str.match(/^ *$/) !== null
 }
@@ -232,6 +238,66 @@ function save_video_changes() {
         title: title,
         description: description,
         tags: tags,
+        videoID: videoID,
+        authKey: readCookie("authKey")
+    });
+}
+
+// fucking nasty global to see if a video has been rated
+var rated = false;
+// star ratings
+$(function () {
+    // init
+    if(window.location['pathname'].includes("video")) {
+        var rated
+        initRateYo();
+    }
+});
+
+function initRateYo() {
+    $("#rateYo").rateYo({
+        starWidth: "15px",
+        ratedFill: "#E74C3C",
+        maxValue: 5,
+        fullStar: true,
+        onSet: (rating, rateYoInstance) => {
+            if(rated === true) {
+                $("#rateYo").rateYo("option", "readOnly", true);
+                sendRating(rating, $("#videoid").text());
+            }
+        },
+        onChange: (rating, rateYoInstance) => {
+            // basically checking to see if the user has actually interacted with rateYo,
+            // needed because the onInit rating changing triggers onSet, which without checking
+            // would send a rating regardless if the user actually rated themselves or not.
+            // a bit of a bodge. Fuck this plugin.
+            rated = true;
+        },
+        onInit: function(rating, rateYoInstance) {
+            // disable rating if not logged in
+            if(readCookie("authKey")===null) {
+                $("#rateYo").rateYo("option", "readOnly", true);
+            }
+
+            // get video ratings
+            ajaxRequest("/api/video/"+ $("#videoid").text() +"/ratings", "GET", {}, (ratings) => {
+                if(ratings.ratings.length > 1) {
+                    // wow, math, find the average!!
+                    var sum = arraySum(ratings.ratings);
+                    var average = sum / ratings.ratings.length;
+                    $("#rateYo").rateYo("option", "rating", average);
+                    console.log(average);
+                } else {
+                    $("#rateYo").rateYo("option", "rating", ratings.ratings[0]);
+                }
+            });
+        }
+    });
+}
+
+function sendRating(rating, videoID) {
+    ajaxRequest("/api/video/rating", "POST", {
+        rating: rating,
         videoID: videoID,
         authKey: readCookie("authKey")
     });

@@ -7,6 +7,7 @@
 </div>
 
 <div id="vtbl" class="">
+    <p hidden id='videoid'><%=video.videoID%></p>
     <div id="vtbl_pl" style="padding-bottom: 32px;">
         <%if(video.processing === true) {%>
         <h1 class="processing">The video is being proccessed!</h1>
@@ -42,8 +43,9 @@
 <div id="vtbl_actions">
     <div class="w_actions">
         <!-- TO DO -->
-        <div id="ratings">85 ratings</div>
-        <div class="w_views"><strong>1,095</strong> views</div>
+        <div id="rateYo"></div>
+        <div id="ratings"><%=video.ratings.length%> ratings</div>
+        <div class="w_views"><strong><%= video.views %></strong> views</div>
         <div class="w_lnks"><img src="https://i.r.worldssl.net/img/hehd0.png" id="w_fv"><span>Favorite</span><img src="https://i.r.worldssl.net/img/flhd0.png"
                 id="w_fl"><span>Flag</span>
         </div>
@@ -75,7 +77,6 @@
                                             Comment</button><span class="tiny_text"> <span id="counter">0</span> / 1000</span>
                                     </div>
                             </div>
-                            <p hidden id='videoid'><%=video.videoID%></p>
                         <% } else { %>
                             <div id="no_video_comments">Please login to post a comment!</div>
                         <% } %>
@@ -112,7 +113,7 @@
                                     <td>Date: <strong>
                                             <date>Sep 24, 2018</date>
                                         </strong></td>
-                                    <td>Views: <strong>1,095</strong></td>
+                                    <td>Views: <strong><%= video.views %></strong></td>
                                     <td>Ratings: <strong>85</strong></td>
                                 </tr>
                                 <tr>

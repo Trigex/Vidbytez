@@ -9,18 +9,17 @@
             <% videos.forEach(function(video){ %>
                 <div>
                         <div class="th">
-                            <!--<div class="th_t">1:14</div>-->
-                            <div class="th_t"></div>
-                            <!--<a href="/watch?v=ClaHo1Hhymv"><img class="vid_th" src="/usfi/thmp/ClaHo1Hhymv.jpg" alt="Opening up Smurf by Kinder Surprise" title="Opening up Smurf by Kinder Surprise" width="140" height="88"></a>-->
-                            <a href="/video/<%=video.videoID%>"></a>
+                                <div class="th_t">2:28</div>
+                                <a href="/video/<%=video.videoID%>"><img class="vid_th" src="/img/thumb/<%=video.thumbnailPath%>" alt="<%=video.title%>" title="<%=video.title%>>" width="140" height="88"></a>
                         </div>
                         <div class="vr_i">
-                            <a href="/video/<%=video.videoID%>" class="ln2"><%=video.title%></a>
-                            <div class="vw s">0 views</div>
-                            <a href="/user/>" class="ch_l s"><%=video.author%></a>
-                            <!--<div class="s_r"><img src="https://i.r.worldssl.net/img/no_star.png" width="14" height="13"><img src="https://i.r.worldssl.net/img/no_star.png" width="14" height="13"><img src="https://i.r.worldssl.net/img/no_star.png" width="14" height="13"><img src="https://i.r.worldssl.net/img/no_star.png" width="14" height="13"><img src="https://i.r.worldssl.net/img/no_star.png" width="14" height="13"></div>-->
+                                <a href="/video/<%=video.videoID%>" class="ln2"><%=video.title%></a>
+                                <div class="vw s"><%=video.views%> views</div>
+                                <a href="/user/<%=video.author%>" class="ch_l s"><%=video.author%></a>
+                                <div class="s_r"><img src="https://i.r.worldssl.net/img/no_star.png" width="14" height="13"><img src="https://i.r.worldssl.net/img/no_star.png" width="14" height="13"><img src="https://i.r.worldssl.net/img/no_star.png" width="14" height="13"><img src="https://i.r.worldssl.net/img/no_star.png" width="14" height="13"><img src="https://i.r.worldssl.net/img/no_star.png" width="14" height="13"></div>
                         </div>
-            <% }) %>
-        </div>                      
+                </div>  
+            <% }) %>         
+        </div>     
     </div>
 </div>
