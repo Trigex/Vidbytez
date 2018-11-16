@@ -193,6 +193,8 @@ function video_upload_check(video) {
     });
 }
 
+var _videoID; // gotta love globals ahahahah some browsers don't like events in handlers I guess so store the id??
+
 function upload_video(video, videoID) {
     // video upload ajax (harder to do through jQuery lol kill me)
     var formData = new FormData();
@@ -202,7 +204,8 @@ function upload_video(video, videoID) {
     formData.append("videoID", videoID);
     var ajax = new XMLHttpRequest();
     ajax.upload.addEventListener("progress", videoProgressHandle, false);
-    ajax.addEventListener("load", videoCompleteHandle(event, videoID), false);
+    _videoID = videoID;
+    ajax.addEventListener("load", videoCompleteHandle, false);
     ajax.addEventListener("error", videoErrorHandle, false);
     ajax.addEventListener("abort", videoAbortHandle, false);
     ajax.open("POST", "/api/video/upload");
@@ -215,9 +218,9 @@ function videoProgressHandle(event) {
     $("#video_progress_text").text(Math.round(percent) + "%");
 }
 
-function videoCompleteHandle(event, videoID) {
+function videoCompleteHandle(event) {
     createNotification("The video was uploaded!!! Now be patient, we gotta process it!", "success");
-    $("#video_title_header").append("<p>Your video will be live <a href='/video/" + videoID + "'>here</a></p>");
+    $("#video_title_header").append("<p>Your video will be live <a href='/video/" + _videoID + "'>here</a></p>");
 }
 
 function videoErrorHandle(event) {
@@ -267,12 +270,12 @@ function initRateYo() {
         },
         onChange: (rating, rateYoInstance) => {
             // basically checking to see if the user has actually interacted with rateYo,
-            // needed because the onInit rating changing triggers onSet, which without checking
-            // would send a rating regardless if the user actually rated themselves or not.
+            // needed because the onInit rating changing triggers onSet, which without checking for mouse input
+            // would send a rating regardless if the user actually rated or not.
             // a bit of a bodge. Fuck this plugin.
             rated = true;
         },
-        onInit: function(rating, rateYoInstance) {
+        onInit: (rating, rateYoInstance) => {
             // disable rating if not logged in
             if(readCookie("authKey")===null) {
                 $("#rateYo").rateYo("option", "readOnly", true);
