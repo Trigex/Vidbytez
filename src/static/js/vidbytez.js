@@ -221,7 +221,7 @@ function videoProgressHandle(event) {
     $("#video_progress_text").text(Math.round(percent) + "%");
 }
 
-function videoCompleteHandle(event, videoID) {
+function videoCompleteHandle(event) {
     if(!event) 
         event = window.event;
 
