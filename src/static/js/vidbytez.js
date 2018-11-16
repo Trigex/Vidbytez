@@ -270,7 +270,6 @@ function initRateYo() {
         fullStar: true,
         onSet: (rating, rateYoInstance) => {
             if(rated === true) {
-                $("#rateYo").rateYo("option", "readOnly", true);
                 sendRating(rating, $("#videoid").text());
             }
         },
@@ -311,6 +310,8 @@ function sendRating(rating, videoID) {
     }, (response) => {
         if (response.success) {
             createNotification(response.success, "success");
+            initRateYo();
+            $("#rateYo").rateYo("option", "readOnly", true);
         } else if (response.error) {
             createNotification(response.error, "error");
             initRateYo(); // reset rateyo
