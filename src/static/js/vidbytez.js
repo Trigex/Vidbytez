@@ -193,7 +193,7 @@ function video_upload_check(video) {
     });
 }
 
-var _videoID; // gotta love globals ahahahah some browsers don't like events in handlers I guess so store the id??
+var _videoID; // gotta love globals ahahahah some browsers don't like additional params in event handlers I guess so store the id??
 
 function upload_video(video, videoID) {
     // video upload ajax (harder to do through jQuery lol kill me)
@@ -308,6 +308,13 @@ function sendRating(rating, videoID) {
         rating: rating,
         videoID: videoID,
         authKey: readCookie("authKey")
+    }, (response) => {
+        if (response.success) {
+            createNotification(response.success, "success");
+        } else if (response.error) {
+            createNotification(response.error, "error");
+            initRateYo(); // reset rateyo
+        }
     });
 }
 
