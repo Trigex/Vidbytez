@@ -213,12 +213,18 @@ function upload_video(video, videoID) {
 }
 
 function videoProgressHandle(event) {
+    if(!event) 
+        event = window.event;
+    
     var percent = (event.loaded / event.total) * 100;
     $("#video_progress").val(Math.round(percent));
     $("#video_progress_text").text(Math.round(percent) + "%");
 }
 
-function videoCompleteHandle(event) {
+function videoCompleteHandle(event, videoID) {
+    if(!event) 
+        event = window.event;
+
     createNotification("The video was uploaded!!! Now be patient, we gotta process it!", "success");
     $("#video_title_header").append("<p>Your video will be live <a href='/video/" + _videoID + "'>here</a></p>");
 }
