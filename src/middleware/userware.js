@@ -199,6 +199,17 @@ var userware = module.exports = {
         }
     },
 
+    subscribeToUser: async function(authKey, username) {
+        try {
+            var userToSubTo = await this.getUserByUsername(username);
+            var userSubscribing = await this.getUserByAuthKey(authKey);
+            userToSubTo.subscribers.push(userSubscribing.username);
+            userSubscribing.subscribing.push(username);
+        } catch(err) {
+            console.log(err);
+        }
+    },
+
     stripSensitiveData: function(user) {
         user.email = undefined;
         user.authKey = undefined;

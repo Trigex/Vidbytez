@@ -3,6 +3,7 @@
  *   Licensed under the MIT License
 */
 
+// create a site cookie
 function createCookie(key, value, date) {
     var expiration = new Date(date).toUTCString();
     var cookie = escape(key) + "=" + escape(value) + ";expires=" + expiration + ";";
@@ -11,6 +12,7 @@ function createCookie(key, value, date) {
     console.log("Creating new cookie with key: " + key + " value: " + value + " expiration: " + expiration);
 }
 
+// read a site cookie
 function readCookie(name) {
     var key = name + "=";
     var cookies = document.cookie.split(';');
@@ -26,10 +28,12 @@ function readCookie(name) {
     return null;
 }
 
+// delete a site cookie
 function deleteCookie(name) {
     createCookie(name, "", -1);
 }
 
+// sum up the contents of an array
 function arraySum(arr) {
     return arr.reduce(function(a,b){
         return a+b;
@@ -59,6 +63,7 @@ function createNotification(content, type) {
 
 /* FORM EVENTS MOTHERFUCKER!!!! */
 
+// on user login (/login)
 $("#user_login").submit((event) => {
     event.preventDefault();
 
@@ -69,11 +74,11 @@ $("#user_login").submit((event) => {
         create_session: true
     }, (response) => {
         if (response.error) {
-            createNotification(response.error, "error");
+            responseNotification(response);
         } else {
             // store authkey as a cookie
             createCookie("authKey", response.authKey, Date.UTC(2020, 1, 1));
-            createNotification(response.success, "success");
+            responseNotification(response);
 
             setTimeout(() => {
                 window.location = "/home"
@@ -82,6 +87,7 @@ $("#user_login").submit((event) => {
     });
 });
 
+// on user register (/register)
 $("#user_register").submit((event) => {
     event.preventDefault();
 
@@ -93,9 +99,9 @@ $("#user_register").submit((event) => {
 
     }, (response) => {
         if (response.error) {
-            createNotification(response.error, "error");
+            responseNotification(response)
         } else {
-            createNotification(response.success, "success");
+            responseNotification(response);
 
             setTimeout(() => {
                 window.location = "/login"
@@ -104,6 +110,7 @@ $("#user_register").submit((event) => {
     });
 });
 
+// on comment submit (/video)
 $("#comment_submit").click(() => {
     var videoID = $("#videoid").text();
     var content = $("#comment_textarea").val();
@@ -114,6 +121,21 @@ $("#comment_submit").click(() => {
     });
 });
 
+// subscribe
+$("#vid_sub_btn").click(() => {
+    // check if logged in
+    if(readCookie("authKey")===null) {
+        createNotification("You must be logged in to subscribe!", "error");
+    } else {
+        var username = $("#username_4_sub").text();
+        ajaxRequest("/api/user/subscribe", "POST", {
+            authKey: readCookie("authKey"),
+            username: username
+        });
+    }
+});
+
+// on logout (navbar)
 $("#logout").click(() => {
     $.ajax({
         url: "/api/user/logout",
@@ -124,10 +146,10 @@ $("#logout").click(() => {
         success: (serverResponse) => {
             var response = JSON.parse(serverResponse);
             if (response.error) {
-                createNotification(response.error, "error");
+                responseNotification(response);
             } else {
                 deleteCookie("authKey");
-                createNotification(response.success, "success");
+                responseNotification(response);
 
                 setTimeout(() => {
                     window.location = "/home"
@@ -172,6 +194,7 @@ function new_upload() {
     video_upload_check(video);
 }
 
+// inital video upload request, sends metadata and shitz
 function video_upload_check(video) {
     ajaxRequest("/api/video/upload", "POST", {
         action: "check",
@@ -181,9 +204,9 @@ function video_upload_check(video) {
         authKey: readCookie("authKey")
     }, (response) => {
         if (response.error) {
-            createNotification(response.error, "error");
+            responseNotification(response);
         } else {
-            createNotification(response.success, "success");
+            responseNotification(response);
             var videoID = response.videoID;
             // create hidden videoID element on page, used for updating metadata
             $("#video_progress").append("<p hidden id='videoid'>" + videoID + "</p>");
@@ -195,6 +218,7 @@ function video_upload_check(video) {
 
 var _videoID; // gotta love globals ahahahah some browsers don't like additional params in event handlers I guess so store the id??
 
+// actually upload video to the server
 function upload_video(video, videoID) {
     // video upload ajax (harder to do through jQuery lol kill me)
     var formData = new FormData();
@@ -237,6 +261,7 @@ function videoAbortHandle(event) {
     createNotification("The upload was aborted!", "error");
 }
 
+// save video metadata changes from uploader
 function save_video_changes() {
     var description = $("#video_description").val();
     var tags = $("#video_tags").val();
@@ -270,6 +295,7 @@ function initRateYo() {
         fullStar: true,
         onSet: (rating, rateYoInstance) => {
             if(rated === true) {
+                $("#rateYo").rateYo("option", "readOnly", true);
                 sendRating(rating, $("#videoid").text());
             }
         },
@@ -293,7 +319,6 @@ function initRateYo() {
                     var sum = arraySum(ratings.ratings);
                     var average = sum / ratings.ratings.length;
                     $("#rateYo").rateYo("option", "rating", average);
-                    console.log(average);
                 } else {
                     $("#rateYo").rateYo("option", "rating", ratings.ratings[0]);
                 }
@@ -302,20 +327,21 @@ function initRateYo() {
     });
 }
 
+// function to create notifications from standard ajax response
+function responseNotification(response) {
+    if(response.success) {
+        createNotification(response.success, "success");
+    } else if(response.error) {
+        createNotification(response.error, "error");
+    }
+}
+
+// send a rateyo rating
 function sendRating(rating, videoID) {
     ajaxRequest("/api/video/rating", "POST", {
         rating: rating,
         videoID: videoID,
         authKey: readCookie("authKey")
-    }, (response) => {
-        if (response.success) {
-            createNotification(response.success, "success");
-            initRateYo();
-            $("#rateYo").rateYo("option", "readOnly", true);
-        } else if (response.error) {
-            createNotification(response.error, "error");
-            initRateYo(); // reset rateyo
-        }
     });
 }
 
@@ -330,11 +356,7 @@ function ajaxRequest(url, type, data, success_cb) {
             if (success_cb) {
                 success_cb(response);
             } else {
-                if (response.success) {
-                    createNotification(response.success, "success");
-                } else if (response.error) {
-                    createNotification(response.error, "error");
-                }
+                responseNotification(response);
             }
         },
         error: function (err) {

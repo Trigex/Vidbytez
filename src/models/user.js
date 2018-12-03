@@ -10,8 +10,8 @@ var userSchema = new mongoose.Schema({
     email: {type: String, max: 254}, // the users email
     gender: {type: String, max: 6}, // the users gender
     password: String, // the hashed user password
-    subscribing: [{type: mongoose.Schema.ObjectId, ref: 'User'}], // users this user follows
-    subscribers: [{type: mongoose.Schema.ObjectId, ref: 'User'}], // users following this user
+    subscribing: [String], // usernames this user follows
+    subscribers: [String], // usernames following this user
     creation: String, // creation timestamp of user
     avatarPath: String, // avatar location
     auth: Number, // User auth, NOT authkey, 0 = regular user, 1 = mod, 2 = admin,

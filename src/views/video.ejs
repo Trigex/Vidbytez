@@ -24,11 +24,12 @@
             <div> <a href="/user/<%=author.username%>"><img src="/img/avatars/<%=author.avatarPath%>" width="55" height="55"
                         class="avt2 " alt="<%=author.username%>"></a>
                 <div class="wt_person"> <a href="/user/<%=author.username%>">
+                <p hidden id="username_4_sub"><%=author.username%></p>
                         <%=author.username%></a><br>
                     <%=video.postTime%><br></div>
                 <!-- SUB -->
-                <div id="subsbtns"> <a href="javascript:void(0)" class="yel_btn" onclick="alert('You must be logged in to subscribe!')">Subscribe</a>
-                    <a href="/user/KnotSnappy/subscribers" class="yel_btn">585</a> </div>
+                <div id="subsbtns"><a id="vid_sub_btn" class="yel_btn">Subscribe</a>
+                    <a href="/user/<%=author.username%>/subscribers" class="yel_btn"><%=author.subscribers.length%></a> </div>
             </div>
             <div class="cl"></div>
             <div id="des_text">

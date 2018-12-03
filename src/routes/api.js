@@ -157,6 +157,27 @@ module.exports = function(app) {
         }
     });
 
+    app.post(uriBase + "user/subscribe", async function(req, res) {
+        var username = req.body.username;
+        var authKey = req.body.authKey;
+        
+        if(!authkey.authKeyExists(authKey)) {
+            res.send(json.error("That authkey doesn't exist!"));
+            return;
+        }
+
+        // check if user is attempting to subscribe to themselves
+        var userSubscrbing = await userware.getUserByAuthKey(authKey);
+        var userToSubTo = await userware.getUserByUsername(username);
+
+        if(userSubscrbing.authKey === userToSubTo.authKey) {
+            res.send(json.error("You can't subscribe to yourself!"));
+            return;
+        }
+
+        await userware.subscribeToUser(authKey, username);
+    });
+
     /*  POST
     *   Destroy session
     */
